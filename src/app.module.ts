@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { GamesModule } from './games/games.module';
+import { Users } from './users/model/users.model';
+import { Game } from './games/model/game.model';
+import { UserGames } from './users/model/user-games';
 
 @Module({
   imports: [
@@ -14,10 +18,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DATABASE,
       autoLoadModels: true,
+      models: [Users, Game, UserGames],
       logging: false,
       sync: { alter: true },
     }),
     UsersModule,
+    GamesModule,
   ],
   controllers: [],
   providers: [],

@@ -6,5 +6,4 @@ export class CreateUserDto {
   role: string;
   username: string;
   password: string;
-  tournament_id: number;
 }

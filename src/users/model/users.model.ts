@@ -1,4 +1,12 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  Model,
+  Table,
+} from 'sequelize-typescript';
+import { Game } from '../../games/model/game.model';
+import { UserGames } from './user-games';
 
 interface UsersAttr {
   fullname: string;
@@ -8,7 +16,6 @@ interface UsersAttr {
   role: string;
   username: string;
   password: string;
-  tournament_id: number;
 }
 
 @Table({ tableName: 'users' })
@@ -63,9 +70,6 @@ export class Users extends Model<Users, UsersAttr> {
   })
   password: string;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  tournament_id: number;
+  @BelongsToMany(() => Game, () => UserGames)
+  games: Game[];
 }
