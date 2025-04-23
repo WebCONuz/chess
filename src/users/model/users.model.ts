@@ -61,6 +61,7 @@ export class Users extends Model<Users, UsersAttr> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   })
   username: string;
 

@@ -23,6 +23,10 @@ export class UsersService {
     return user || {};
   }
 
+  getByUsername(username: string) {
+    return this.usersRepository.findOne({ where: { username } });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto) {
     const game = await this.usersRepository.findOne({ where: { id } });
     if (!game) {
