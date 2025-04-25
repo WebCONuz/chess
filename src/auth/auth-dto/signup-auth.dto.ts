@@ -11,12 +11,12 @@ export class SignUpUserDto {
   @IsNotEmpty()
   fullname: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  age: number;
+  age: string;
 
-  @IsNumber()
-  raiting: number;
+  @IsString()
+  raiting: string;
 
   @IsAlpha()
   country: string;
@@ -30,4 +30,6 @@ export class SignUpUserDto {
 
   @IsStrongPassword()
   password: string;
+
+  avatar: any;
 }

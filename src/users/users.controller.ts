@@ -6,7 +6,9 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -14,6 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserAuthGuard } from '../common/guards/user-auth.guard';
 import { UserSelfGuard } from '../common/guards/self.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiBearerAuth()
 @Controller('users')
@@ -34,8 +37,9 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @UseInterceptors(FileInterceptor('avatar'))
+  create(@Body() createUserDto: CreateUserDto, @UploadedFile() avatar: any) {
+    return this.usersService.create(createUserDto, avatar);
   }
 
   @Patch(':id')

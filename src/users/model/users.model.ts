@@ -16,6 +16,7 @@ interface UsersAttr {
   role: string;
   username: string;
   password: string;
+  avatar: string;
 }
 
 @Table({ tableName: 'users' })
@@ -70,6 +71,12 @@ export class Users extends Model<Users, UsersAttr> {
     allowNull: false,
   })
   password: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  declare avatar: string;
 
   @BelongsToMany(() => Game, () => UserGames)
   games: Game[];

@@ -9,6 +9,7 @@ import { SignUpUserDto } from '../auth-dto/signup-auth.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { SignInUserDto } from '../auth-dto/signin-auth.dto';
+import { FileService } from '../../file/file.service';
 
 @Injectable()
 export class AuthService {
@@ -17,13 +18,16 @@ export class AuthService {
     readonly jwtService: JwtService,
   ) {}
 
-  async signup(authDto: SignUpUserDto) {
+  async signup(authDto: SignUpUserDto, avatar: any) {
     try {
       const hashPassword = await bcrypt.hash(authDto.password, 10);
-      const user = await this.authService.create({
-        ...authDto,
-        password: hashPassword,
-      });
+      const user = await this.authService.create(
+        {
+          ...authDto,
+          password: hashPassword,
+        },
+        avatar,
+      );
       const payload = {
         sub: user.id,
         login: user.username,
